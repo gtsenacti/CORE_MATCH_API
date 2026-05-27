@@ -2,25 +2,24 @@ function loginRoutes(app, db) {
 
     app.post("/login", (req, res) => {
 
-        const { nome, email, senha } = req.body;
+        const { email, senha } = req.body;
 
         // validação
-        if (!nome || !email || !senha) {
+        if (!email || !senha) {
 
             return res.status(400).json({
-                erro: "Nome, e-mail e senha são obrigatórios"
+                erro: "E-mail e senha são obrigatórios"
             });
         }
 
         const sql = `
             SELECT *
             FROM TabelaCadastro
-            WHERE nome = ?
-            AND email = ?
+            WHERE email = ?
             AND senha = ?
         `;
 
-        db.get(sql, [nome, email, senha], (err, row) => {
+        db.get(sql, [email, senha], (err, row) => {
 
             if (err) {
 
